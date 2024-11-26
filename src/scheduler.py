@@ -46,9 +46,6 @@ class Scheduler:
                     body['status'] = 'error'
                 await send_message(body, AMQP['resp_queue'], reply_to=reply_to)
 
-
-            # message.ack()
-
     async def consume(self):
         for queue, on_message in self.resp_queues.items():
             queue = await self.channel.declare_queue(queue, durable=True)
