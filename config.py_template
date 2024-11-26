@@ -1,0 +1,23 @@
+PG = {
+    'driv': 'postgresql+psycpog2',
+    'user': '',
+    'pass': '',
+    'host': 'db', # default by docker-compose
+    'port': '5432',
+    'name': 'postgres',
+    'schema': 'task_master'
+}
+
+MAX_ERR =5
+
+AMQP = {
+    'user': 'guest',
+    'pass': 'guest',
+    'host': 'rabbitmq', # default by docker-compose
+    'port': 5672,
+    'work_queue': 'task_master',
+    'resp_queue': 'resp_queue'
+}
+ECHO_DB = False
+
+MODE = 'debug'
