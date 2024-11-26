@@ -1,0 +1,68 @@
+version: '3'
+volumes:
+    postgres:
+services:
+  task_master:
+    depends_on:
+      - db
+    image: task_master
+    container_name: "task_master_app"
+    build: .
+    volumes:
+      - ./src:/app
+    ports:
+      - 8000:8000
+    networks:
+      - custom
+    entrypoint: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+  task_worker:
+    depends_on:
+      - db
+      - rabbitmq
+    image: task_master
+    build: .
+
+    volumes:
+      - ./src:/app
+    networks:
+      - custom
+    entrypoint: ["python", "worker.py"]
+
+  task_scheduler:
+    depends_on:
+      - db
+      - rabbitmq
+    image: task_master
+    build: .
+    volumes:
+      - ./src:/app
+    networks:
+      - custom
+    entrypoint: ["python", "scheduler.py"]
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: always
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      - custom
+  
+  db:
+    container_name: "db-scraping"
+    image: postgres:13-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Passw0rd
+      - PGDATA=postgres
+    ports:
+      - "5484:5432"
+    networks:
+      - custom
+
+networks:
+  custom:
+    driver: bridge
