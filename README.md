@@ -11,6 +11,10 @@ This project is a simple Task Management API built with **FastAPI** and **SQLAlc
 - **Database Management**:
   - Uses **SQLAlchemy** ORM.
   - Handles schema migrations with **Alembic**.
+- **Technologies**:
+  - FastAPI
+  - SQLAlchemy
+  - RabbitMQ
 
 ---
 
@@ -19,7 +23,7 @@ This project is a simple Task Management API built with **FastAPI** and **SQLAlc
 Ensure you have the following installed on your system:
 - **Docker** (https://www.docker.com/)
 - **Docker Compose** (bundled with Docker Desktop)
-- **Python 3.9+** (only required for development, not for running with Docker)
+- **Python 3.10+** (only required for development, not for running with Docker)
 
 ---
 
@@ -27,8 +31,8 @@ Ensure you have the following installed on your system:
 
 1. Clone the repository:
    ```bash
-   git clone <repository_url>
-   cd <repository_folder>
+   git clone https://github.com/LukoninDmitryPy/task_master.git
+   cd task_master
    ```
 3. Define variables
     Set params in config.py_template, alembic.ini(db::63), docker-compose.yaml(db::58-60)
@@ -41,7 +45,6 @@ Ensure you have the following installed on your system:
    ```
 3. Init alembic
    ```bash
-   cd src
    docker exec -it task_master_app alembic revision --autogenerate -m "Name_of_migration"
    docker exec -it task_master_app alembic upgrade head
    ```
@@ -53,4 +56,7 @@ Ensure you have the following installed on your system:
 
 ## Example API usage
 
-### SwaggerAPI on 127.0.0.1:8000/docs
+### SwaggerAPI on:
+```
+127.0.0.1:8000/docs
+```
